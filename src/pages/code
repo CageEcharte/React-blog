@@ -1,0 +1,17 @@
+constructor(props) {
+  super(props);
+  this.state = {
+    recentCampers: [],
+    allTimeCampers: [],
+    currentView: 'recentCampers'
+  }
+
+
+ }
+
+componentWillMount() {
+   let current = this;
+axios.all([this.fetchRecent(), this.fetchAllTime()]).then(axios.spread(function(recentCampers, allTimeCampers){
+  current.setState({ recentCampers: recentCampers.data, allTimeCampers: allTimeCampers.data});
+}));
+}
