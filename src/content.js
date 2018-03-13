@@ -17,6 +17,7 @@ constructor(){
 componentDidMount(){
   let contentURL= "http://localhost:8888/cage-website/wp-json/wp/v2/posts";
   fetch(contentURL).then(response => response.json()).then(response => {
+    console.log()
 this.setState({
       text: response
     })
@@ -27,10 +28,12 @@ this.setState({
 render() {
 
   let projects = this.state.text.map((project, index) => {
+
+
     return(
       <div key={index}>
-{project.content.rendered}
-console.log({project.length});
+{Parser(project.content.rendered)}
+
       </div>
     )
   })

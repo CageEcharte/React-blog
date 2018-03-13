@@ -15,3 +15,30 @@ axios.all([this.fetchRecent(), this.fetchAllTime()]).then(axios.spread(function(
   current.setState({ recentCampers: recentCampers.data, allTimeCampers: allTimeCampers.data});
 }));
 }
+
+
+
+
+
+//original code:
+
+componentDidMount(){
+  let projectURL= "http://localhost:8888/cage-website/wp-json/wp/v2/posts";
+  fetch(projectURL).then(response => response.json()).then(response => {
+this.setState({
+      projects: response
+    })
+  })
+}
+
+//setstate code:
+
+//this.setState({
+  currentProject: project
+})
+
+
+// logic of current post:
+//  if(project !== el.currentTarget.id){
+    do not display content that isnt the current id
+  }
