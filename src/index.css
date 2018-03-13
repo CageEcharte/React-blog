@@ -7,3 +7,8 @@ body {
 .heading{
   text-align: center;
 }
+
+.hidden {
+   visibility: hidden;
+   display: none;
+}

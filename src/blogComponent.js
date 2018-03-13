@@ -6,65 +6,60 @@ import BasicExample from './routes.js';
 
 class Posts extends React.Component {
 
-constructor(){
-  super();
-  this.state = {
-    projects: [],
-    currentProject: []
-  }
-  this.displayContent = this.displayContent.bind(this)
-}
-
-
-componentWillMount(){
-  let projectURL= "http://localhost:8888/cage-website/wp-json/wp/v2/posts";
-  fetch(projectURL).then(response => response.json()).then(response => {
-    console.log(response[0])
-this.setState({
-      projects: response,
-      currentProject: response[0]
-
-    })
-
-  })
-}
-
-displayContent (el){
-  var content;
-  console.log(typeof el.currentTarget.id);
-
-this.state.projects.map((project, index) => {
-
-if (parseInt(el.currentTarget.id) === project.id) {
-  this.setState({
-        currentProject: project
-
-      })
+   constructor() {
+      super();
+      this.state = {
+         projects: [],
+         currentProject: null
+      }
+      this.displayContent = this.displayContent.bind(this)
    }
-})
 
-}
 
-render() {
+   componentWillMount() {
+      let projectURL = "http://159.65.57.115/blog/wp-json/wp/v2/posts";
+      fetch(projectURL)
+         .then(response => response.json())
+         .then(response => {
+            // console.log(response[0])
 
-  let projects = this.state.projects.map((project, index) => {
+            this.setState({
+               projects: response,
+               currentProject: response[0]
+            });
+         })
+   }
 
-    return(
+   displayContent(el) {
+      var content;
+      // console.log(typeof el.currentTarget.id);
 
-      <div key={index} id={project.id} onClick={this.displayContent}>
-   <a href="#"> {project.title.rendered} </a>
+      this.state.projects.map((project, index) => {
+         console.log(el.currentTarget.id);
 
-      </div>
+         if (parseInt(el.currentTarget.id) === project.id) {
+            // console.log(project);
+            this.props.update({
+               activePost: el.currentTarget.id
+            })
+         }
+      })
 
-    )
-  })
-  return(
-<div>
- {projects}
-{this.state.currentProject.content.rendered}
-</div>
-  );
-}
+   }
+
+   render() {
+      let projects = this.state.projects.map((project, index) =>
+         <div key={index} id={project.id} onClick={this.displayContent}>
+            <button> {project.title.rendered} </button>
+         </div>
+      )
+
+      return (
+         <div>
+            {projects}
+         </div>
+      );
+   }
 
 
 }
